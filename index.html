@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json</title>
+</head>
+
+<body>
+
+
+    <div id="demo">
+        <h2>This is for jsson</h2>
+        <button onclick="ajaxMaker()">click me</button>
+    </div>
+
+
+    <script>
+        function ajaxMaker() {
+            let xlr = new XMLHttpRequest();
+
+            xlr.open('GET', 'https://restcountries.com/v2.1/all', true)
+            xlr.onload = function() {
+                if (xlr.status == 200) {
+                    console.log("worked")
+                    let countries = JSON.parse(this.response)
+                    console.log(countries)
+                    countries.forEach(country => {
+                        const countryName = document.createElement("div");
+                        const countryImg = document.createElement("img");
+                        countryImg.src = country.flag;
+                        countryName.innerHTML = country.name
+                        countryName.appendChild(countryImg);
+                        document.getElementById('demo').appendChild(countryName);
+                    })
+                }
+            }
+            xlr.send()
+        }
+    </script>
+
+</body>
+
+</html>
